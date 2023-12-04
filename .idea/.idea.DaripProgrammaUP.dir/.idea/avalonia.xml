@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="Window/AddEditDiseaseRecord.axaml" value="DaripProgrammaUP.csproj" />
+        <entry key="Window/AddEditPacient.axaml" value="DaripProgrammaUP.csproj" />
+        <entry key="Window/AddEditPatient.axaml" value="DaripProgrammaUP.csproj" />
+        <entry key="Window/AddEditProcedureWindow.axaml" value="DaripProgrammaUP.csproj" />
+        <entry key="Window/AddPatient.axaml" value="DaripProgrammaUP.csproj" />
+        <entry key="Window/AddProcedureWindow.axaml" value="DaripProgrammaUP.csproj" />
+        <entry key="Window/LoginWindow.axaml" value="DaripProgrammaUP.csproj" />
+        <entry key="Window/MenyWindow.axaml" value="DaripProgrammaUP.csproj" />
+        <entry key="Window/PacientDiseaseWindow.axaml" value="DaripProgrammaUP.csproj" />
+        <entry key="Window/ProcedureWindow.axaml" value="DaripProgrammaUP.csproj" />
+        <entry key="Window/ReportWindow.axaml" value="DaripProgrammaUP.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

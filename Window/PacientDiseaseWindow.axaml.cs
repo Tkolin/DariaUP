@@ -66,37 +66,18 @@ public partial class PacientDiseaseWindow : Avalonia.Controls.Window
         DownloadDataGrid();
     }
 
-    private void BtnRemoveSelect_OnClick(object? sender, RoutedEventArgs e)
-    {
-        DataGrid.SelectedItem = null;
-    }
+
 
     private void ResetBtn_OnClick(object? sender, RoutedEventArgs e)
     {
         SearchBox.Text = "";
     }
     
-    // private void BtnCreateProcedure_OnClick(object? sender, RoutedEventArgs e)
-    // {
-    //     if (DataGrid.SelectedItem == null)
-    //         return;
-    //     AddProcedureWindow wAddReport =
-    //         new AddProcedureWindow(DataGrid.SelectedItem as DiseaseRecord);
-    //     wAddReport.ShowDialog(this);
-    // }
 
-    private void BtnRecover_OnClick(object? sender, RoutedEventArgs e)
-    {
-        if (DataGrid.SelectedItem == null)
-            return;
-        DiseaseRecord diseaseRecord = DataGrid.SelectedItem as DiseaseRecord;
-        diseaseRecord.StatusID = 4;
-        diseaseRecord.DateEnd = DateTime.Now;
-        DataBaseManager.UpdateDiseaseRecord(diseaseRecord);
-        DownloadDataGrid();
-    }
 
-    private void BtnUpdateFinalPrice_OnClick(object? sender, RoutedEventArgs e)
+
+
+    private void UpdateFinalPrice()
     {
         if (DataGrid.SelectedItem == null)
             return;
@@ -144,5 +125,10 @@ public partial class PacientDiseaseWindow : Avalonia.Controls.Window
     {
         AddPatient adw = new AddPatient();
         adw.ShowDialog(this);
+    }
+
+    private void DataGrid_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        UpdateFinalPrice();
     }
 }

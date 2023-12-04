@@ -85,17 +85,7 @@ public partial class ProcedureWindow : Avalonia.Controls.Window
         DataGrid.SelectedItem = null;
     }
 
-  
-
-    // private void BtnCreateProcedure_OnClick(object? sender, RoutedEventArgs e)
-    // {
-    //     if (DataGrid.SelectedItem == null)
-    //         return;
-    //     Procedure procedure = DataGrid.SelectedItem as Procedure;
-    //     procedure.StatusID = 4;
-    //     DataBaseManager.UpdateProcedure(procedure);
-    //     DownloadDataGrid();
-    // }
+    
 
     private void SearchBox_OnTextChanged(object? sender, TextChangedEventArgs e)
     {
