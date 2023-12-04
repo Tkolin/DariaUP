@@ -4,56 +4,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" 
         xmlns:models="clr-namespace:DaripProgrammaUP.DateBase"
-        MinHeight="600" MinWidth = "1200"  MaxHeight="600" MaxWidth = "1200" 
+        MinHeight="600" MinWidth = "600"  MaxHeight="600" MaxWidth = "600" 
         x:Class="DaripProgrammaUP.Window.ReportWindow"
         Title="Генератор отчётов">
-     <Grid ShowGridLines="True" ColumnDefinitions="1*,0.6*">
+     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-         <Grid Grid.Column="0">
-             <Grid ShowGridLines="False" Margin="0,30,0,0"
-                   ColumnDefinitions="*,*" RowDefinitions="1*,10*,0.5*">
-                 
-                 <TextBlock FontSize="30" Text="Отчёт" HorizontalAlignment="Right"/>
-                 
-                 
-                 <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
-                     <StackPanel Orientation="Horizontal">
-                         <TextBlock Text="Кол-во проведённых процедур: "/>
-                         <TextBlock x:Name="TBoxCountProcedure" Text="NaN"/>
-                     </StackPanel>
-                     <TextBlock  Text="Список процедур"/>
-                     <TextBlock x:Name="TBoxProcedureList" Text="------"/>
-                 </StackPanel>
-                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
-                     <StackPanel Orientation="Horizontal">
-                         <TextBlock Text="Период: "/>
-                         <TextBlock x:Name="TBoxDateSelected" Text="NaN"/>
-                     </StackPanel>
-                     <StackPanel Orientation="Horizontal">
-                         <TextBlock Text="Врач: "/>
-                         <TextBlock x:Name="TBoxDoctor" Text="NaN"/>
-                     </StackPanel>
-                     <StackPanel Orientation="Horizontal">
-                         <TextBlock Text="Пациент: "/>
-                         <TextBlock x:Name="TBoxPatient" Text="NaN"/>
-                     </StackPanel>
-                     <StackPanel Orientation="Horizontal">
-                         <TextBlock Text="Статус процедуры: "/>
-                         <TextBlock x:Name="TBoxStatus" Text="NaN"/>
-                     </StackPanel>
-                     </StackPanel>
-                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal"
-                      HorizontalAlignment="Right">
-                     <TextBlock Text="Итоговая прибыль: "/>
-                     <TextBlock x:Name="TBoxPrice" Text="NaN"/>
-                 </StackPanel>
-             </Grid>
-         </Grid>
-        <Grid Grid.Column="1"  ShowGridLines="True"  RowDefinitions="3*,*">
-            <TextBlock Text="Настройки:" Margin="5"
-                       HorizontalAlignment="Center"/>
-             
-                <StackPanel Grid.Row="0" Margin="10,30,0,0">
+
+            <TextBlock Text="Настройки:" Margin="5" HorizontalAlignment="Center"/>
+            
                    <TextBlock Text="Период от:"/>
                     <DatePicker x:Name="DPicerStart"/>
                    <TextBlock Text="до:"/>
@@ -107,31 +65,18 @@
                                Click="BtnStatusClear_OnClick"/> 
 
                    </StackPanel>
-            </StackPanel>
-     
+                   <Button x:Name="BtnReset" Margin="5" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                           Click="BtnReset_OnClick" Width="200" 
+                           Content="Сбросить" />
+
+
+                   <Button x:Name="BtnGenerate"  Margin="5" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                           Click="BtnGenerate_OnClick" Width="200"
+                           Content="Сгенерировать" />
+            
 
                
-    
+            
 
-            <StackPanel Grid.Row="1" HorizontalAlignment = "Center"  Margin="2">
-                <TextBlock Text="Управление" Margin="0,0,0,10" HorizontalAlignment="Center"/>
-
-                
-                
-                <Button x:Name="BtnReset" HorizontalAlignment="Center" Margin="5"
-                        Click="BtnReset_OnClick" Width="200" HorizontalContentAlignment="Center"
-                        Content="Сбросить" />
-
-
-                <Button x:Name="BtnGenerate" HorizontalAlignment="Center" Margin="5"
-                        Click="BtnGenerate_OnClick" Width="200" HorizontalContentAlignment="Center"
-                        Content="Сгенерировать" />
-                
-                <Button x:Name="BtnGoPrint" HorizontalAlignment="Center" Margin="5"
-                        Click="BtnGoPrint_OnClick" Width="200" HorizontalContentAlignment="Center"
-                        Content="В печать" />
-            </StackPanel>
-
-        </Grid>
-    </Grid>
+        </StackPanel>
 </Window>

@@ -15,16 +15,12 @@ public partial class PacientDiseaseWindow : Avalonia.Controls.Window
 {
     private List<DiseaseRecord> _DataDiseaseRecord { get; set; }
     private List<DiseaseRecord> _ViewDiseaseRecord { get; set; }
-    private List<Patient> _PatientList { get; set; }
-    private List<Doctor> _DoctorList { get; set; }
-    private List<Status> _StatusList { get; set; }
-    private List<Disease> _DiseaseList { get; set; }
+
 
     public PacientDiseaseWindow()
     {
         InitializeComponent();
         DownloadDataGrid();
-        UpdateComboBox();
     }
 
     public void DownloadDataGrid()
@@ -58,42 +54,9 @@ public partial class PacientDiseaseWindow : Avalonia.Controls.Window
         DataGrid.ItemsSource = _ViewDiseaseRecord;
     }
 
-    private void UpdateComboBox()
-    {
-        _DiseaseList = DataBaseManager.GetDiseases();
-        _StatusList = DataBaseManager.GetStatusList();
-        _DoctorList = DataBaseManager.GetDoctors();
-        _PatientList = DataBaseManager.GetPatients();
-        CBoxDisease.ItemsSource = _DiseaseList;
-        CBoxPatient.ItemsSource = _PatientList;
-        CBoxStatus.ItemsSource = _StatusList;
-        CBoxAttendingDoctor.ItemsSource = _DoctorList;
-    }
 
-    private void DataGrid_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
-    {
-        if (DataGrid.SelectedItem == null)
-        {
-            CBoxPatient.SelectedItem = null;
-            NUpDownFinalPrice.Value = 0;
-            DPickerDateStart.SelectedDate = DateTimeOffset.Now;
-            DPickerDateEnd.SelectedDate = null;
-            CBoxStatus.SelectedItem = null;
-            CBoxDisease.SelectedItem = null;
-            CBoxAttendingDoctor.SelectedItem = null;
-        }
-        else
-        {
-            DiseaseRecord value = DataGrid.SelectedItem as DiseaseRecord;
-            CBoxPatient.SelectedItem = _PatientList.Where(c => value.PatientID == c.Id).FirstOrDefault();
-            NUpDownFinalPrice.Value = value.FinalPrice;
-            DPickerDateStart.SelectedDate = value.DateStart;
-            DPickerDateEnd.SelectedDate = value.DateEnd;
-            CBoxStatus.SelectedItem = _StatusList.Where(c => value.StatusID == c.Id).FirstOrDefault();
-            CBoxDisease.SelectedItem = _DiseaseList.Where(c => value.DiseaseID == c.Id).FirstOrDefault();
-            CBoxAttendingDoctor.SelectedItem = _DoctorList.Where(c => value.AttendingDoctorID == c.Id).FirstOrDefault();
-        }
-    }
+
+
 
     private void BtnDelet_OnClick(object? sender, RoutedEventArgs e)
     {
@@ -112,57 +75,15 @@ public partial class PacientDiseaseWindow : Avalonia.Controls.Window
     {
         SearchBox.Text = "";
     }
-
-    private void BtnSavet_OnClick(object? sender, RoutedEventArgs e)
-    {
-        if (CBoxPatient.SelectedItem == null ||
-            DPickerDateStart.SelectedDate == null ||
-            CBoxStatus.SelectedItem == null ||
-            CBoxAttendingDoctor.SelectedItem == null ||
-            CBoxDisease.SelectedItem == null)
-        {
-            MessageBoxManager.GetMessageBoxStandard("Ошибка", "Данные не заполнены", ButtonEnum.Ok).ShowAsync();
-            return;
-        }
-
-        if (DataGrid.SelectedItem == null)
-        {
-            DataBaseManager.AddDiseaseRecord(new DiseaseRecord(
-                0,
-                (CBoxPatient.SelectedItem as Patient).Id,
-                Convert.ToDecimal(NUpDownFinalPrice.Value.Value),
-                DPickerDateStart.SelectedDate.Value.Date,
-                DPickerDateEnd.SelectedDate.Value.Date,
-                (CBoxStatus.SelectedItem as Status).Id,
-                (CBoxAttendingDoctor.SelectedItem as Doctor).Id,
-                (CBoxDisease.SelectedItem as Disease).Id
-            ));
-        }
-        else
-        {
-            DataBaseManager.UpdateDiseaseRecord(new DiseaseRecord(
-                ((DiseaseRecord)DataGrid.SelectedItem).Id,
-                (CBoxPatient.SelectedItem as Patient).Id,
-                Convert.ToDecimal(NUpDownFinalPrice.Value.Value),
-                DPickerDateStart.SelectedDate.Value.Date,
-                DPickerDateEnd.SelectedDate.Value.Date,
-                (CBoxStatus.SelectedItem as Status).Id,
-                (CBoxAttendingDoctor.SelectedItem as Doctor).Id,
-                (CBoxDisease.SelectedItem as Disease).Id
-            ));
-        }
-
-        DownloadDataGrid();
-    }
-
-    private void BtnCreateProcedure_OnClick(object? sender, RoutedEventArgs e)
-    {
-        if (DataGrid.SelectedItem == null)
-            return;
-        AddProcedureWindow wAddReport =
-            new AddProcedureWindow(DataGrid.SelectedItem as DiseaseRecord);
-        wAddReport.ShowDialog(this);
-    }
+    
+    // private void BtnCreateProcedure_OnClick(object? sender, RoutedEventArgs e)
+    // {
+    //     if (DataGrid.SelectedItem == null)
+    //         return;
+    //     AddProcedureWindow wAddReport =
+    //         new AddProcedureWindow(DataGrid.SelectedItem as DiseaseRecord);
+    //     wAddReport.ShowDialog(this);
+    // }
 
     private void BtnRecover_OnClick(object? sender, RoutedEventArgs e)
     {
@@ -199,5 +120,29 @@ public partial class PacientDiseaseWindow : Avalonia.Controls.Window
     private void SearchBox_OnTextChanged(object? sender, TextChangedEventArgs e)
     {
         UpdateDataGrid();
+    }
+
+    private void BtnAdd_OnClick(object? sender, RoutedEventArgs e)
+    {
+        AddEditDiseaseRecord adw = new AddEditDiseaseRecord();
+        adw.ShowDialog(this);
+    }
+
+    private void BtnEdit_OnClick(object? sender, RoutedEventArgs e)
+    {
+        if (DataGrid.SelectedItem == null)
+        {
+            MessageBoxManager.GetMessageBoxStandard("Ошибка", "Строка не выбрана", ButtonEnum.Ok).ShowAsync();
+            return;
+        }
+
+        AddEditDiseaseRecord adw = new AddEditDiseaseRecord(DataGrid.SelectedItem as DiseaseRecord);
+        adw.ShowDialog(this);
+    }
+
+    private void BtnAddPatient_OnClick(object? sender, RoutedEventArgs e)
+    {
+        AddPatient adw = new AddPatient();
+        adw.ShowDialog(this);
     }
 }

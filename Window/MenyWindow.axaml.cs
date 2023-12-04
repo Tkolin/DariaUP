@@ -56,4 +56,10 @@ public partial class MenyWindow : Avalonia.Controls.Window
         ReportWindow window = new ReportWindow();
         window.ShowDialog(this);
     }
+
+    private void BtnAddPatient_OnClick(object? sender, RoutedEventArgs e)
+    {
+        AddPatient window = new AddPatient();
+        window.ShowDialog(this);
+    }
 }

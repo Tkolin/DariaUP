@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using DaripProgrammaUP.DateBase;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 
 namespace DaripProgrammaUP.Window;
 
@@ -31,15 +34,13 @@ public partial class ReportWindow : Avalonia.Controls.Window
         CBoxPatient.ItemsSource = _PatientsList;
     }
 
-    private void GenerateReport()
+    private async Task GenerateReport()
     {
+        // Строка для сохранения
+        string OutputString = "";
         // Стартовые переменные
         decimal price = 0;
         List<Procedure> procedures = DataBaseManager.GetProcedures();
-
-        // Отчистка формы
-        ClearReportForm();
-
         // Фильрация по ComboBox
         if (CBoxDoctor.SelectedItem != null)
             procedures = procedures.Where(c => c.DoctorID == (CBoxDoctor.SelectedItem as Doctor).Id).ToList();
@@ -49,20 +50,26 @@ public partial class ReportWindow : Avalonia.Controls.Window
             procedures = procedures.Where(c => c.DoctorID == (CBoxStatus.SelectedItem as Status).Id).ToList();
 
         // Проверка периода
+        OutputString += "Пациент: \n";
         if (CBoxPatient.SelectedItem == null)
-            TBoxPatient.Text = "Все";
+            OutputString += "Все\n";
         else
-            TBoxPatient.Text = (CBoxPatient.SelectedItem as Patient).FirstName + " " +
-                               (CBoxPatient.SelectedItem as Patient).LastName;
+            OutputString += (CBoxPatient.SelectedItem as Patient).FirstName + " " +
+                            (CBoxPatient.SelectedItem as Patient).LastName+"\n";
+        OutputString += "Доктор: \n";
         if (CBoxDoctor.SelectedItem == null)
-            TBoxDoctor.Text = "Все";
+            OutputString += "Все\n";
         else
-            TBoxDoctor.Text = (CBoxDoctor.SelectedItem as Doctor).FirstName + " " +
-                              (CBoxDoctor.SelectedItem as Doctor).LastName;
+            OutputString += (CBoxDoctor.SelectedItem as Doctor).FirstName + " " +
+                            (CBoxDoctor.SelectedItem as Doctor).LastName +"\n";
+        OutputString += "Статус: \n";
         if (CBoxStatus.SelectedItem == null)
-            TBoxStatus.Text = "Все";
+            OutputString += "Все\n";
         else
-            TBoxStatus.Text = (CBoxStatus.SelectedItem as Status).Name;
+            OutputString += (CBoxStatus.SelectedItem as Status).Name;
+        
+        // Фильтрация по датам
+
         if (DPicerStart.SelectedDate == null)
             DPicerStart.SelectedDate = DateTime.Today.AddYears(-1);
         if (DPicerEnd.SelectedDate == null)
@@ -76,30 +83,38 @@ public partial class ReportWindow : Avalonia.Controls.Window
             DPicerStart.SelectedDate = cash;
         }
 
-        TBoxCountProcedure.Text = procedures.Count.ToString();
-        TBoxDateSelected.Text =
-            DPicerStart.SelectedDate.Value.ToString() + " - " + DPicerEnd.SelectedDate.Value.ToString();
+        OutputString += "Период: \n";
+        OutputString += 
+            DPicerStart.SelectedDate.Value.ToString() + " - " + DPicerEnd.SelectedDate.Value.ToString()+ "\n";
+        OutputString += "Кол-во: \n";
+        OutputString +=  procedures.Count.ToString()+ "\n";
+        
+        
+        // Заполнение строк
+        OutputString += "Процедуры: \n";
         foreach (Procedure value in procedures)
         {
-            TBoxProcedureList.Text += value.Id + " | " + value.DateStart.Date + " | " + value.Cost.ToString() + " | " +
-                                      value.OutputStatusName + "\n";
+            OutputString +=  value.Id + " | " + value.DateStart.Date + " | " + value.Cost.ToString() + " | " +
+                             value.OutputStatusName + "\n";
             price += value.Cost;
         }
+        OutputString += "Итоговая цена: \n";
+        OutputString +=  price.ToString()+ "\n";
+        
+        // Сохранение
+        SaveFileDialog dialog = new SaveFileDialog();
+        dialog.Title = "Сохранить отчет";
+        dialog.InitialFileName = "Отчет.txt";
+    
+        string result = await dialog.ShowAsync(this);
 
-        TBoxPrice.Text = price.ToString();
+        if (result != null)
+        {
+            File.WriteAllText(result, OutputString);
+        }
+
+
     }
-
-    private void ClearReportForm()
-    {
-        TBoxDoctor.Text = "";
-        TBoxProcedureList.Text = "";
-        TBoxPrice.Text = "";
-        TBoxPatient.Text = "";
-        TBoxCountProcedure.Text = "";
-        TBoxDateSelected.Text = "";
-        TBoxStatus.Text = "";
-    }
-
     private void BtnPatientClear_OnClick(object? sender, RoutedEventArgs e)
     {
         CBoxPatient.SelectedItem = null;
@@ -120,16 +135,11 @@ public partial class ReportWindow : Avalonia.Controls.Window
         CBoxPatient.SelectedItem = null;
         CBoxDoctor.SelectedItem = null;
         CBoxStatus.SelectedItem = null;
-        ClearReportForm();
     }
 
     private void BtnGenerate_OnClick(object? sender, RoutedEventArgs e)
     {
         GenerateReport();
     }
-
-    private void BtnGoPrint_OnClick(object? sender, RoutedEventArgs e)
-    {
-        GenerateReport();
-    }
+    
 }

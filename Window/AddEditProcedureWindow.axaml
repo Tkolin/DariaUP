@@ -4,12 +4,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" 
         xmlns:models="clr-namespace:DaripProgrammaUP.DateBase"
-        MinHeight="600" MinWidth = "1600"  MaxHeight="600" MaxWidth = "1600" 
+        MinHeight="600" MinWidth = "600"  MaxHeight="600" MaxWidth = "600" 
         x:Class="DaripProgrammaUP.Window.AddEditProcedureWindow"
-        Title="AddEditProcedureWindow">
-            <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment = "Center"  Margin="2">
-                <TextBlock Text="Редактирование" Margin="0,0,0,10" HorizontalAlignment="Center"/>
-
+        Title="Редактирование">
+            <StackPanel HorizontalAlignment = "Center"  Margin="2">
           
 
                 <TextBlock Text="Врач:"/>
@@ -35,13 +33,13 @@
                 <TextBlock Text="Описание:" />
                 <TextBox x:Name="TBoxDescription" Width="250" Height="50" MaxLines="10"/>
                 
-                <TextBlock Text="Дата проведения:" IsEnabled="False" />
+                <TextBlock Text="Дата проведения:" />
                 <DatePicker x:Name="DPickerDateStart" Width="250" />
-                <TextBlock Text="Продолжительность:" IsEnabled="False"/>
+                <TextBlock Text="Продолжительность:" />
                 <NumericUpDown x:Name="NUpDownDuration" Width="250" Increment="1"/>
-                <TextBlock Text="Стоимость:" IsEnabled="False"/>
+                <TextBlock Text="Стоимость:" />
                 <NumericUpDown x:Name="NUpDownCost" Width="250"/>
-                <TextBlock Text="Статус:" IsEnabled="False"/>
+                <TextBlock Text="Статус:"/>
                 <ComboBox x:Name="CBoxStatus" Width="250">
                     <ComboBox.ItemTemplate>
                         <DataTemplate x:DataType="models:Status">

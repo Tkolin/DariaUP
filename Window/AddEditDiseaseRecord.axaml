@@ -5,11 +5,9 @@
         mc:Ignorable="d" 
         xmlns:models="clr-namespace:DaripProgrammaUP.DateBase"
         MinHeight="600" MinWidth = "1600"  MaxHeight="600" MaxWidth = "1600" 
-        x:Class="DaripProgrammaUP.Window.AddEditPacient"
-        Title="AddEditPacient">
-            <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment = "Center"  Margin="2">
-                <TextBlock Text="Редактирование" Margin="0,0,0,10" HorizontalAlignment="Center"/>
-
+        x:Class="DaripProgrammaUP.Window.AddEditDiseaseRecord"
+        Title="Редактирование">
+            <StackPanel  HorizontalAlignment = "Center"  Margin="2">
 
                 <TextBlock Text="Пациент:"/>
                 <ComboBox x:Name="CBoxPatient" Width="250">
@@ -24,10 +22,10 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 <TextBlock Text="Итоговая цена:" />
-                <NumericUpDown x:Name="NUpDownFinalPrice" IsEnabled="False" Width="250"/>
-                <TextBlock Text="Дата начала:" IsEnabled="False" />
+                <NumericUpDown x:Name="NUpDownFinalPrice" Width="250"/>
+                <TextBlock Text="Дата начала:"  />
                 <DatePicker x:Name="DPickerDateStart" Width="250" />
-                <TextBlock Text="Дата окончания:" IsEnabled="False"/>
+                <TextBlock Text="Дата окончания:" />
                 <DatePicker x:Name="DPickerDateEnd" Width="250"/>
                 <TextBlock Text="Статус:"/>
                 <ComboBox x:Name="CBoxStatus" Width="250">

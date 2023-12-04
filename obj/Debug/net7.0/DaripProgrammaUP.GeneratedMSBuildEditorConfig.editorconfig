@@ -18,13 +18,13 @@ build_property.ProjectDir = C:\Users\TSystem\RiderProjects\DaripProgrammaUP\
 [C:/Users/TSystem/RiderProjects/DaripProgrammaUP/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/TSystem/RiderProjects/DaripProgrammaUP/Window/AddEditPacient.axaml]
+[C:/Users/TSystem/RiderProjects/DaripProgrammaUP/Window/AddEditDiseaseRecord.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/TSystem/RiderProjects/DaripProgrammaUP/Window/AddEditProcedureWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/TSystem/RiderProjects/DaripProgrammaUP/Window/AddProcedureWindow.axaml]
+[C:/Users/TSystem/RiderProjects/DaripProgrammaUP/Window/AddPatient.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/TSystem/RiderProjects/DaripProgrammaUP/Window/LoginWindow.axaml]
